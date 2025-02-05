@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Amor</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000; /* Fondo negro */
+            font-family: Arial, sans-serif;
+            color: white; /* Texto blanco */
+        }
+        .video-container {
+            width: 80%; /* Ancho del video ajustado */
+            max-width: 600px; /* Ancho máximo para que no se haga muy grande */
+            height: 300px; /* Altura del video ajustada */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px; /* Separación entre el video y el corazón */
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Para que el video cubra toda el área */
+        }
+        .loading-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .heart {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 0 auto;
+            background-color: #ccc;
+            clip-path: polygon(50% 0%, 0% 35%, 25% 100%, 50% 75%, 75% 100%, 100% 35%); /* Forma de corazón */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            animation: heartbeat 1s infinite; /* Animación de latido */
+        }
+        .heart-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0;
+            background-color: #FF6B6B;
+            animation: fillHeart 15s forwards; /* Llenado más lento */
+        }
+        @keyframes fillHeart {
+            0% { height: 0; }
+            100% { height: 100%; }
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .percentage {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: white;
+            z-index: 10;
+        }
+        .loading-text {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- Contenedor del video en la parte superior -->
+<div class="video-container">
+    <!-- Aquí colocas el enlace de tu video de YouTube o cualquier otro video con controles ocultos -->
+    <iframe src="Video de gatitos.mp4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<!-- Contenedor de la carga del corazón y texto abajo -->
+<div class="loading-container">
+    <p class="loading-text" id="loading-text">Cargando Amor...</p>
+
+    <!-- Corazón que se va llenando -->
+    <div class="heart">
+        <div class="heart-fill"></div>
+        <div class="percentage" id="percentage">0%</div>
+    </div>
+</div>
+
+<script>
+    var heartFill = document.querySelector('.heart-fill');
+    var percentage = document.getElementById('percentage');
+    var loadingText = document.getElementById('loading-text');
+    var fillHeight = 0;
+    var interval = setInterval(function() {
+        fillHeight += 0.5; // Aumenta el porcentaje lentamente
+        percentage.textContent = Math.floor(fillHeight) + '%';
+        heartFill.style.height = fillHeight + '%';
+
+        // Cambiar el texto conforme se llena el corazón
+        if (fillHeight >= 30 && fillHeight < 60) {
+            loadingText.textContent = "Limpiando Corazoncito...";
+        } else if (fillHeight >= 60 && fillHeight < 85) {
+            loadingText.textContent = "Regalo Preparándose con Amor...";
+        } else if (fillHeight >= 85 && fillHeight < 100) {
+            loadingText.textContent = "Amor Casi Completo...";
+        }
+
+        // Cuando llega al 100%, cambia el texto y redirige
+        if (fillHeight >= 100) {
+            clearInterval(interval); // Detener la animación
+            loadingText.textContent = "Amor Completo!";
+            setTimeout(function() {
+                window.location.href = "flower.html"; // Redirigir a flower.html
+            }, 3500); // Espera 1 segundo antes de redirigir
+        }
+    }, 78); // Lento incremento de porcentaje (100ms)
+</script>
+
+</body>
+</html>
+
+
+
+
